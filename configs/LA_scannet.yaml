@@ -1,0 +1,82 @@
+SOLVER:
+  gpu: 0,
+  run: train
+  logdir: logs/finetune_LA_200/D9_2cm
+  max_epoch: 500
+  test_every_epoch: 2
+  weight_decay: 0.0
+
+  # learning rate
+  lr: 0.05
+  lr_type: poly
+  step_size: (200,300)  # has no effect for `poly`
+
+DATA:
+  train:
+    name: scannet
+    limit: True          # True if LA training
+    points: 200          # LA point configuration
+    semi: True           # True if Using unlabeled data for semi-training
+
+    # octree building
+    depth: 9
+    node_dis: True
+    offset: 0.0
+
+    # data augmentations
+    distort: True
+    angle: (0, 0, 180)
+    scale: 0.1
+    jitter: 0.1
+    uniform: True
+
+    # data loading
+    location: /work/bryanyu1997/data/scannet/train
+    filelist: /work/bryanyu1997/data/scannet/scannetv2_train.txt
+    batch_size: 4
+    shuffle: True
+    in_memory: False
+
+  test:
+    name: scannet
+
+    # octree building
+    depth: 9
+    node_dis: True
+    offset: 0.0
+
+    # data augmentations
+    distort: False  # no data augmentation
+    angle: (0, 0, 180)
+    scale: 0.1
+    jitter: 0.1
+    uniform: True
+
+    # data loading
+    location: /work/bryanyu1997/data/scannet/train
+    filelist: /work/bryanyu1997/data/scannet/scannetv2_val.txt
+    batch_size: 1
+    shuffle: False
+    in_memory: False
+
+MODEL:
+  name: unet
+  channel: 7
+  nout: 21
+  depth: 9
+  nempty: True
+  interp: nearest
+  sync_bn: False
+  use_checkpoint: False
+  pretrain_file: 'logs/mp3d_00080.model.pth'
+
+LOSS:
+  mask: 0
+  point_wise: True
+  num_class: 21
+
+  # Hyperparameter for semi-training
+  weight_sum: 0.5
+  alpha: 0.999
+  consistency: 10
+  consist_rampup: 30
