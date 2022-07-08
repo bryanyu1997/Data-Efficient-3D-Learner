@@ -31,8 +31,8 @@ DATA:
     uniform: True
 
     # data loading
-    location: /work/bryanyu1997/data/scannet/train
-    filelist: /work/bryanyu1997/data/scannet/scannetv2_train.txt
+    location: data/scannet/train
+    filelist: data/scannet/scannetv2_train.txt
     batch_size: 4
     shuffle: True
     in_memory: False
@@ -53,8 +53,8 @@ DATA:
     uniform: True
 
     # data loading
-    location: /work/bryanyu1997/data/scannet/train
-    filelist: /work/bryanyu1997/data/scannet/scannetv2_val.txt
+    location: data/scannet/train
+    filelist: data/scannet/scannetv2_val.txt
     batch_size: 1
     shuffle: False
     in_memory: False
@@ -68,7 +68,7 @@ MODEL:
   interp: nearest
   sync_bn: False
   use_checkpoint: False
-  pretrain_file: 'logs/mp3d_00080.model.pth'
+  pretrain_file: 'ckpt/mp3d_00080.model.pth'
 
 LOSS:
   mask: 0

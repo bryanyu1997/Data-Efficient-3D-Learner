@@ -114,7 +114,7 @@ class TransformScanNet:
     self.color_jit_std = 0.05
     self.elastic_params = np.array([[0.2, 0.4], [0.8, 1.6]], np.float32)
     if 'points' in flags :
-      self.lim_idx = torch.load('./points/points' + str(flags.points))
+      self.lim_idx = torch.load('./points/LA/points' + str(flags.points))
       self.filenames = None
 
   def transform_scannet(self, sample, idx):

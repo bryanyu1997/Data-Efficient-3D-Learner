@@ -1,7 +1,7 @@
 SOLVER:
   gpu: 0,
   run: train
-  logdir: logs/LRA_20_class_20_mini_mean_teacher/D9_2cm
+  logdir: logs/finetune_LR_20/D9_2cm
   max_epoch: 300
   test_every_epoch: 2
   weight_decay: 0.0
@@ -28,9 +28,9 @@ DATA:
     uniform: True
 
     # data loading
-    location: /work/bryanyu1997/data/scannet/train
-    filelist: /work/bryanyu1997/data/scannet/scannetv2_train.txt
-    limited_reconst: /work/bryanyu1997/data/scannet/scenes/20.txt
+    location: data/scannet/train
+    filelist: data/scannet/scannetv2_train.txt
+    limited_reconst: points/LR/20.txt
     batch_size: 2
     shuffle: True
     in_memory: False
@@ -51,8 +51,8 @@ DATA:
     uniform: True
 
     # data loading
-    location: /work/bryanyu1997/data/scannet/train
-    filelist: /work/bryanyu1997/data/scannet/scannetv2_val.txt
+    location: data/scannet/train
+    filelist: data/scannet/scannetv2_val.txt
     batch_size: 1
     shuffle: False
     in_memory: False
@@ -66,8 +66,8 @@ MODEL:
   interp: nearest
   sync_bn: False
   use_checkpoint: False
-  pretrain_file: 'logs/pretrained/mp3d_00080.model.pth'
-  pseudo_file: '/work/bryanyu1997/logs/mp3d_pretrain_reconst_20/D9_2cm/checkpoints/00300.model.pth'
+  pretrain_file: 'ckpt/mp3d_00080.model.pth'
+  pseudo_file: '/work/bryanyu1997/logs/finetune_LR_20/D9_2cm/checkpoints/00300.model.pth'
 
 LOSS:
   mask: 0
