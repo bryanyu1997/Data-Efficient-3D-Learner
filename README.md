@@ -10,7 +10,7 @@ We use a strong and well-trained image scene parser to augment single view RGB-D
 ## Preparation & Installation 
 
 ### Dataset 
-For ScanNet Data-efficient evaluation, download the 3D dataset [ScanNet]((https://niessner.github.io/Matterport/)) and pre-process by following command 
+Download the 3D dataset [ScanNet](http://www.scan-net.org/) and pre-process by following command 
 ``python tools/scannet.py --run process_scannet --path_in <scannet_folder> --path_out data/scannet``
 
 You can download the filelist to split train, valid, and test subset by command 
@@ -18,7 +18,7 @@ You can download the filelist to split train, valid, and test subset by command
 ``python tools/scannet.py --run download_filelists``
 
 ### Pre-traind model weights
-We utilize RGB-D dataset [Matterport3D](https://niessner.github.io/Matterport/) to pre-train 3D model. The pre-trained weight is provided in [link](). To fine-tune or evaluate the following cases, the pre-trained weight needs to be download and place in ``logs/pretrained``
+We utilize RGB-D dataset [Matterport3D](https://niessner.github.io/Matterport/) to pre-train 3D models. The pre-trained weight is provided in [link](https://drive.google.com/file/d/189dr0abasreJrO_LoidDz_niNNLqfmij/view?usp=sharing). To fine-tune or evaluate the following cases, the pre-trained weight needs to be downloaded and placed in ``ckpt``
 
 ### Installation
 The codes have been run on Ubuntu20 and PyTorch1.7. 
@@ -35,7 +35,7 @@ sudo apt-get install libopenexr-dev
 pip install -r requirement.txt
 ```
 
-Follow [O-CNN](https://github.com/microsoft/O-CNN/blob/master/docs/installation.md) tutorial to install ``ocnn`` package
+Follow [O-CNN](https://github.com/microsoft/O-CNN/blob/master/docs/installation.md) tutorial to install ``ocnn`` package, or run the commands below: 
 
 ```shell
 git clone https://github.com/microsoft/O-CNN.git
@@ -59,15 +59,20 @@ python -W ignore test/test_all.py -v
 #### Limited Recontructions training
 ``python LR_segmentation.py --config config/LR_scannet.yaml``
 
-To use the unlabeled data for semi-supervied training, you can set ``DATA.train.semi`` to ``True`` in yaml file. 
+
+- Key argument in yaml file
+
+    - **train.semi**: If True, use the unlabeled data for semi-supervied training. 
+    - **train.limit**: Points of LA configuration
+    - **train.limited_reconst**: File-lists of LR configuration 
 
 ### Evaluation 
-We provide the trained model weights [here]() which are supervised by both labeled and unlabeled data. We also submit these results on [official benchmark](http://kaldir.vc.in.tum.de/scannet_benchmark/data_efficient/). You can replace ``SOLVER.ckpt`` in yaml file with the directory of checkpoint file.
+To evaluate our pretraining model on validation set, we provide the trained model weights [here](https://drive.google.com/drive/folders/1JGXG6k5yQDc0s9HohfJpq9T8aC-Xt7lZ?usp=sharing). You can replace ``SOLVER.ckpt`` with the directory of checkpoint file in ``config/scannet_val.yaml``. 
 
-`` python segmentation.py --config config/scannet_eval.yaml``
+`` python segmentation.py --config config/scannet_val.yaml``
 
 ## Customized Pre-training
-You can choose any RGB-D dataset as you want. All you need is to convert the image type into point-cloud forms by pre-processing``tool/preprocess.py``. We provide the soft-label pre-training scripts by following command.
+You can choose any RGB-D dataset as you want, and all you need is to convert the image type into point-cloud forms by pre-processing``tool/preprocess.py``. We provide the soft-label pre-training scripts by following command.
 
 ### Data preparation 
 Download RGB-D dataset [Matterport3D document]((https://niessner.github.io/Matterport/)) and pre-process by following command 
@@ -80,4 +85,6 @@ Download the well-trained scene parser weights in [DPT repository](https://githu
 ``python softlabel_segmentation --config config/mp3d.yaml``
 
 ## Acknowledgement
-Many thanks to these excellent open source projects:
+Many thanks to these practical open source projects:
+- [O-CNN](https://github.com/microsoft/O-CNN)
+- [DPT](https://github.com/isl-org/DPT)
