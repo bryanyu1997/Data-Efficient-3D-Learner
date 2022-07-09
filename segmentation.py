@@ -4,7 +4,7 @@ import torch
 import numpy as np
 
 from solver import Solver, Dataset, parse_args, get_config
-from datasets import get_scannet_dataset, get_s3dis_dataset
+from datasets import get_scannet_dataset
 
 
 def loss_function(logit, label):
@@ -135,7 +135,8 @@ class SegSolver(Solver):
 
 
 def main(TheSolver):
-  get_config().LOSS.mask = -1           # mask the invalid labels
+  get_config().LOSS.mask = 0          # mask the invalid labels
+  get_config().LOSS.num_class = 21          # mask the invalid labels
   get_config().LOSS.point_wise = False  # point-wise loss or voxel-wise loss
 
   FLAGS = parse_args()

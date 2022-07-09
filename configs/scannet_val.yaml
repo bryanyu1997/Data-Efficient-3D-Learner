@@ -1,0 +1,37 @@
+SOLVER:
+  gpu: 0,
+  logdir: logs/scannet/D9_2cm_eval
+  run: test
+  eval_epoch: 1
+  ckpt: ../logs/finetune_LA_200/D9_2cm/checkpoints/00500.model.pth
+
+DATA:
+  test:
+    name: scannet
+
+    # octree building
+    depth: 9
+    node_dis: True
+    offset: 0.0
+
+    # data augmentations
+    distort: False  # no data augmentation
+    angle: (0, 0, 180)
+    scale: 0.1
+    jitter: 0.1
+    uniform: True
+
+    location: ../data/scannet/train
+    filelist: ../data/scannet/scannetv2_val.txt
+    batch_size: 1
+    shuffle: False
+    in_memory: False
+    # num_workers: 0
+
+MODEL:
+  name: unet
+  channel: 7
+  nout: 21
+  depth: 9
+  nempty: True
+  interp: nearest
