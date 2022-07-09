@@ -3,3 +3,4 @@ data
 ckpt
 model
 __pycache__
+*.pyc
