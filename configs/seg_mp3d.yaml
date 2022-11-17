@@ -1,0 +1,72 @@
+SOLVER:
+  gpu: 0,
+  run: train
+  logdir: logs/mp3d/D9_2cm
+  max_epoch: 200
+  test_every_epoch: 1
+  weight_decay: 0.0001
+
+  # learning rate
+  lr: 0.05
+  lr_type: poly
+  step_size: (200,300)  # has no effect for `poly`
+
+DATA:
+  train:
+    name: mp3d
+
+    # octree building
+    depth: 9
+    node_dis: True
+    offset: 0.0
+
+    # data augmentations
+    distort: True
+    angle: (0, 0, 180)
+    scale: 0.1
+    jitter: 0.1
+    uniform: True
+
+    # data loading
+    location: /work/bryanyu1997/mp3d/train
+    filelist: /work/bryanyu1997/mp3d/mp3d_train.txt
+    batch_size: 6
+    shuffle: True
+    in_memory: False
+
+  test:
+    name: mp3d
+
+    # octree building
+    depth: 9
+    node_dis: True
+    offset: 0.0
+
+    # data augmentations
+    distort: False  # no data augmentation
+    angle: (0, 0, 180)
+    scale: 0.1
+    jitter: 0.1
+    uniform: True
+
+    # data loading
+    location: /home/bryanyu1997/mp3d/val
+    filelist: /work/bryanyu1997/mp3d/mp3d_val.txt
+    batch_size: 1
+    shuffle: False
+    in_memory: False
+
+MODEL:
+  name: unet
+  channel: 7
+  nout: 150
+  depth: 9
+  nempty: True
+  interp: nearest
+  sync_bn: False
+  use_checkpoint: False
+
+LOSS:
+  mask: 0
+  point_wise: True
+  num_class: 150
