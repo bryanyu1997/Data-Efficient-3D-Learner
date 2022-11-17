@@ -82,7 +82,7 @@ Download RGB-D dataset [Matterport3D document]((https://niessner.github.io/Matte
 Download the well-trained scene parser weights in [DPT repository](https://github.com/isl-org/DPT). We utilize [dpt_hybrid-ade20k-53898607.pt](https://github.com/intel-isl/DPT/releases/download/1_0/dpt_hybrid-ade20k-53898607.pt) in our paper.  
 
 ### Pre-training
-``python softlabel_segmentation --config config/mp3d.yaml``
+``python softlabel_segmentation --config config/seg_mp3d.yaml``
 
 ## Acknowledgement
 Many thanks to these practical open source projects:
